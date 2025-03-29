@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bluetooth Interface</title>
+</head>
+<body>
+    <h1>Conectar ao Dispositivo Bluetooth</h1>
+    <button id="connectButton">Conectar</button>
+    <p id="status">Status: Desconectado</p>
+    <script>
+        document.getElementById('connectButton').addEventListener('click', async () => {
+            try {
+                const device = await navigator.bluetooth.requestDevice({
+                    filters: [{ services: ['battery_service'] }]
+                });
+                const server = await device.gatt.connect();
+                document.getElementById('status').textContent = "Status: Conectado";
+            } catch (error) {
+                document.getElementById('status').textContent = "Status: Erro ao conectar";
+            }
+        });
+    </script>
+</body>
+</html>
